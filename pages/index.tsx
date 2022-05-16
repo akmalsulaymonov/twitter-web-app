@@ -8,6 +8,7 @@ import Widgets from '../components/Widgets'
 const Home: NextPage = () => {
   return (
     <div className="mx-auto lg:max-w-6xl max-h-screen overflow-hidden">
+      
       <Head>
         <title>Twitter Web App</title>
         <link rel="icon" href="/favicon.ico" />

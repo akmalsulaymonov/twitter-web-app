@@ -5,9 +5,12 @@ import {
     PhotographIcon, 
     SearchCircleIcon 
 } from '@heroicons/react/outline'
-import React from 'react'
+import React, { useState } from 'react'
 
 function TweetBox() {
+
+    const [input, setInput] = useState<string>('')
+
   return (
     <div className="flex space-x-2 p-5">
         <img 
@@ -18,7 +21,13 @@ function TweetBox() {
 
         <div className="flex flex-1 items-center pl-2">
             <form className="flex flex-1 flex-col">
-                <input type="text" placeholder="What's happening?" className="h-24 w-full text-xl outline-none placeholder:text-xl" />
+                <input 
+                    type="text" 
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="What's happening?" 
+                    className="h-24 w-full text-xl outline-none placeholder:text-xl" 
+                />
                 <div className="flex items-center">
                     <div className="flex flex-1 space-x-2 text-twitter">
                         <PhotographIcon className="h-5 w-5 cursor-pointer transition-transform duration-150 ease-out hover:scale-150" />
@@ -27,7 +36,12 @@ function TweetBox() {
                         <CalendarIcon className="h-5 w-5 cursor-pointer transition-transform duration-150 ease-out hover:scale-150" />
                         <LocationMarkerIcon className="h-5 w-5 cursor-pointer transition-transform duration-150 ease-out hover:scale-150" />
                     </div>
-                    <button className="rounded-full bg-twitter px-5 py-2 font-bold text-white">Tweet</button>
+                    <button 
+                        disabled={!input}
+                        className="rounded-full bg-twitter px-5 py-2 font-bold text-white disabled:opacity-40"
+                    >
+                        Tweet
+                    </button>
                 </div>
             </form>
         </div>
