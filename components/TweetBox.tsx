@@ -6,6 +6,8 @@ import {
     SearchCircleIcon 
 } from '@heroicons/react/outline'
 import React, { useState } from 'react'
+import Image from 'next/image'
+import Avatar from '../public/images/avatar-man-icon.jpg'
 
 function TweetBox() {
 
@@ -13,11 +15,10 @@ function TweetBox() {
 
   return (
     <div className="flex space-x-2 p-5">
-        <img 
-            className="h-14 w-14 rounded-full object-cover mt-4"
-            src="https://links.papareact.com/gll" 
-            alt="ava" 
-        />
+        
+        <div className="relative h-14 w-14 mt-4" >
+          <Image src={Avatar} alt="avatar" layout="fill" objectFit="cover" className="rounded-full object-cover" />
+        </div>
 
         <div className="flex flex-1 items-center pl-2">
             <form className="flex flex-1 flex-col">

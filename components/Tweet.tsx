@@ -2,6 +2,7 @@ import { ChatAlt2Icon, HeartIcon, SwitchHorizontalIcon, UploadIcon } from '@hero
 import React from 'react'
 import TimeAgo from 'react-timeago'
 import { Tweet } from '../typings'
+import Image from 'next/image'
 
 interface Props {
     tweets: Tweet[]
@@ -11,11 +12,11 @@ const Tweet = ({ tweet }: Props) => {
   return (
     <div className="flex flex-col space-x-3 border-y border-gray-100 p-5">
         <div className="flex space-x-3">
-            <img 
-                className="h-10 w-10 rounded-full object-cover"
-                src={tweet.profileImg} 
-                alt={tweet._id}
-            />
+
+            <div className="relative h-10 w-10" >
+                <Image src={tweet.profileImg} alt={tweet._id} layout="fill" objectFit="cover" className="rounded-full object-cover" />
+            </div>
+
             <div>
                 <div className="flex items-center space-x-1">
                     <p className="mr-1 font-bold">{tweet.username}</p>
@@ -26,13 +27,15 @@ const Tweet = ({ tweet }: Props) => {
                     />
                 </div>
                 <p>{tweet.text}</p>
+
                 { tweet.image && (
                     <img 
-                    className="m-5 ml-0 mb-1 max-h-60 rounded-lg object-cover shadow-sm"
-                    src={tweet.image} 
-                    alt=""
-                />
+                        className="m-5 ml-0 mb-1 max-h-60 rounded-lg object-cover shadow-sm"
+                        src={tweet.image} 
+                        alt="111"
+                    />
                 )}
+                
             </div>
         </div>
         <div className="mt-5 flex justify-between">
