@@ -74,7 +74,7 @@ const Tweet = ({ tweet }: Props) => {
             <div className="my-2 mt-5 max-h-44 space-y-5  border-t border-gray-100 p-5">
                 { comments.map((comment) => (
                     <div key={ comment._id} className="relative flex space-x-2">
-                        <hr className="absolute left-5 top-10 h-8 border-x border-twitter"/>
+                        <hr className="absolute left-5 top-10 h-8 border-x border-twitter/30"/>
                         <img 
                             src={comment.profileImg} 
                             className="h-7 w-7 rounded-full object-cover"
