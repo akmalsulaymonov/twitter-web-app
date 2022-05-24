@@ -6,19 +6,20 @@ import {
     SearchCircleIcon 
 } from '@heroicons/react/outline'
 import React, { useState } from 'react'
-import Image from 'next/image'
-import Avatar from '../public/images/avatar-man-icon.jpg'
 
 function TweetBox() {
 
     const [input, setInput] = useState<string>('')
+    const { data: session } = useState()
 
   return (
     <div className="flex space-x-2 p-5">
         
-        <div className="relative h-14 w-14 mt-4" >
-          <Image src={Avatar} alt="avatar" layout="fill" objectFit="cover" className="rounded-full object-cover" />
-        </div>
+        <img 
+            className="h-14 w-14 mt-4 rounded-full object-cover"
+            src={ session?.user?.image || 'https://gravity.studio/akmal/projects/twitter-web-app/avatar-man-icon.jpg'} 
+            alt="" 
+        />
 
         <div className="flex flex-1 items-center pl-2">
             <form className="flex flex-1 flex-col">
@@ -38,7 +39,7 @@ function TweetBox() {
                         <LocationMarkerIcon className="h-5 w-5 cursor-pointer transition-transform duration-150 ease-out hover:scale-150" />
                     </div>
                     <button 
-                        disabled={!input}
+                        disabled={!input || !session}
                         className="rounded-full bg-twitter px-5 py-2 font-bold text-white disabled:opacity-40"
                     >
                         Tweet
