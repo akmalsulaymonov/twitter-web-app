@@ -5,9 +5,16 @@ import {
     PhotographIcon, 
     SearchCircleIcon 
 } from '@heroicons/react/outline'
-import React, { useRef, useState } from 'react'
+import React, { Dispatch, SetStateAction, useRef, useState } from 'react'
+import toast from 'react-hot-toast'
+import  { Tweet, TweetBody } from '../typings'
+import { fetchTweets } from '../utils/fetchTweets'
 
-function TweetBox() {
+interface Props {
+    setTweets: Dispatch<SetStateAction<Tweet[]>>
+}
+
+const TweetBox = ({ setTweets }: Props) => {
 
     const [input, setInput] = useState<string>('')
     const { data: session } = useState()
@@ -15,7 +22,7 @@ function TweetBox() {
     const [image, setImage] = useState<string>('')
     const imageInputRef = useRef<HTMLInputElement>(null)
 
-    const addImageToTweet = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const addImageToTweet = (e: React.MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
         e.preventDefault();
 
         if(!imageInputRef.current?.value) return;
@@ -23,6 +30,41 @@ function TweetBox() {
         setImage(imageInputRef.current.value);
         imageInputRef.current.value = '';
         setImageUrlBoxIsOpen(false);
+    }
+
+    const postTweet = async () => {
+        const tweetInfo: TweetBody = {
+            text: input,
+            username: session?.user?.name || 'Unknown User',
+            profileImg: session?.user?.image || 'https://gravity.studio/akmal/projects/twitter-web-app/avatar-man-icon.jpg',
+            image: image
+        }
+
+        const result = await fetch(`/api/addTweet`, {
+            body: JSON.stringify(tweetInfo),
+            method: 'POST'
+        })
+
+        const json = await result.json()
+
+        const newTweets = await fetchTweets()
+        setTweets(newTweets)
+
+        toast('Tweet Posted', {
+            icon: '🎉',
+        })
+
+        return json
+    }
+
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+
+        postTweet();
+
+        setInput('')
+        setImage('')
+        setImageUrlBoxIsOpen(false)
     }
 
   return (
@@ -55,7 +97,9 @@ function TweetBox() {
                         <LocationMarkerIcon className="h-5 w-5 cursor-pointer transition-transform duration-150 ease-out hover:scale-150" />
                     </div>
                     <button 
-                        disabled={!input || !session}
+                        onClick={handleSubmit}
+                        // disabled={!input || !session}
+                        disabled={!input}
                         className="rounded-full bg-twitter px-5 py-2 font-bold text-white disabled:opacity-40"
                     >
                         Tweet
